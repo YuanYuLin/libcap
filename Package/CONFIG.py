@@ -42,9 +42,18 @@ def MAIN_EXTRACT(args):
     set_global(args)
 
     ops.mkdir(dst_lib_dir)
-    ops.copyto(ops.path_join(src_lib_dir, "libcap.so.2.25"), dst_lib_dir)
-    ops.ln(dst_lib_dir, "libcap.so.2.25", "libcap.so.2")
-    ops.ln(dst_lib_dir, "libcap.so.2.25", "libcap.so")
+
+    lib_so = "libattr.so.1.1.0"
+    ops.copyto(ops.path_join(src_lib_dir, lib_so), dst_lib_dir)
+    ops.ln(dst_lib_dir, lib_so, "libattr.so.1.1")
+    ops.ln(dst_lib_dir, lib_so, "libattr.so.1")
+    ops.ln(dst_lib_dir, lib_so, "libattr.so")
+
+    lib_so = "libcap.so.2.24"
+    ops.copyto(ops.path_join(src_lib_dir, lib_so), dst_lib_dir)
+    ops.ln(dst_lib_dir, lib_so, "libcap.so.2")
+    ops.ln(dst_lib_dir, lib_so, "libcap.so")
+
     return True
 
 def MAIN_PATCH(args, patch_group_name):
@@ -80,7 +89,7 @@ def MAIN_SDKENV(args):
     iopc.add_includes(cflags)
 
     libs = ""
-    libs += " -lcap"
+    libs += " -lcap -lattr"
     iopc.add_libs(libs)
 
     return False
